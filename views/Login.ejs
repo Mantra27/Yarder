@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>body {
+    background-color: rgb(244, 244, 244)!important;
+}
+
+.login {
+    width: 40%;
+    margin: 80px auto;
+    border-radius: 10px;
+    padding: 20px;
+    border-left: 5px solid #009688;
+    box-shadow: 0px 0px 0px 0px #3f51b5;
+}
+
+.login>.row>h2 {
+    margin: auto;
+}
+
+.btn-form {
+    width: 100%;
+    margin-top: 20px;
+}
+.google-login{
+    width: 100%;
+    height: auto;
+    margin-top: 17px;
+    margin-right: -10%;
+}
+.container{
+    display: flex;
+    width: 100%;
+    margin-top: 12%;
+}
+.image{
+    width: 90%;
+    height: auto;
+    margin-left: -10%;
+    margin-top: 10%;
+}
+</style>
+</head>
+
+<body>
+    <div class="container">
+    <div class="image-container">
+        <img src="https://i.ibb.co/nb3SgMS/Subject.png"  class="image"/>
+    </div>
+        <div class="login">
+            <div class="row">
+                <h2>Yarder Sign-In</h2>
+                <div class="col-md-12">
+                    <label for="email">Username</label>
+                        <input type="text" class="form-control" id="email" placeholder="Ex. youremail@mail.com">
+                        <br>
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" placeholder="Ex. A123@paswod">
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-md-6">
+                    <input type="submit" id="register" value="Signup" class="btn btn-outline-success btn-form">
+                </div>
+                
+                <div class="col-md-6">
+                    <a href="<%=proxy%>/google">
+                        <img class="google-login" src="https://miro.medium.com/v2/resize:fit:1400/1*u0bwdudgoyKjSLntsRcqiw.png">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('register').addEventListener('click', function() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+
+            fetch("http://localhost:3000/local-login", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password,
+                })
+            }).then(res => res.json()).then(res => {
+                console.log(res);
+                if (res.status == 200) {
+                    window.location.href = "http://localhost:3000/home";
+                } else {
+                    alert(res.message);
+                }
+                
+            }).catch(err => {
+                console.log(err)
+            })
+        });
+    </script>
+</body>
+
+</html>

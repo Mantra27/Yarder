@@ -1,0 +1,25 @@
+{
+  "name": "yarder",
+  "version": "1.0.0",
+  "description": "[HackOut] Team Series's YMS (Yard Management System)",
+  "main": "/src/index.ts",
+  "scripts": {
+    "push": "git add . && git commit -m 'automated push' && git push origin main --force",
+    "run": "ts-node index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Mantra27, princexp01",
+  "license": "MIT",
+  "dependencies": {
+    "@tensorflow/tfjs-node": "^4.10.0",
+    "0uth": "^1.2.1",
+    "exceljs": "^4.3.0",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "papaparse": "^5.4.1",
+    "passport": "^0.6.0"
+  },
+  "repository": "https://github.com/Mantra27/Yarder.git",
+  "private": true
+}

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yard Management System Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f2f2f2;
+    }
+    header {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+    }
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      max-width: 2000px; /* Increase max-width for wider table */
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+    .profile-panel {
+      display: flex;
+      align-items: center;
+      padding: 20px;
+      background-color: #f2f2f2;
+      border-bottom: 1px solid #ccc;
+      float: left;
+      width: 100%;
+      padding-left: 21%;
+    }
+    .profile-image {
+      width: 70px;
+      height: 70px;
+      border-radius: 100%;
+      margin-right: 20px;
+    }
+    .profile-info {
+
+      flex: 1;
+    }
+    .profile-name {
+        padding-left: 50px;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    .profile-role {
+        padding-left: 50px;
+
+      color: #777;
+    }
+    .dashboard-section {
+        width: 80%;
+      margin-top: 30px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+      font-weight: bold;
+    }
+    .status-loaded {
+      background-color: #3498db; /* Blue */
+      color: #fff;
+    }
+    .status-empty {
+      background-color: #fff; /* White */
+      color: #333;
+    }
+    .size-40 {
+      background-color: #de8900; /* White */
+      color: #333;
+    }
+    .size-20 {
+      background-color: #ffbf57; /* White */
+      color: #333;
+    }
+    table {
+      width: 100%; /* Stretch the table to 100% width */
+      border-collapse: collapse;
+    }
+    .legends {
+      height: 30px;
+      display: relative;
+      margin-right: 10px;
+      margin-top: 10px;
+    }
+    .legend-loaded-dot {
+      background-color: #3498db;
+      width: 10px;
+      height: 10px;
+      display: inline-block;
+      margin-right: 5px;
+      border-radius: 50%;
+    }
+    .legend-loaded-empty {
+      background-color: white;
+      width: 10px;
+      height: 10px;
+      display: inline-block;
+      margin-right: 5px;
+      border-radius: 50%;
+    }
+    .legend-loaded {
+      color: #3498db; /* Blue */
+    }
+    .legend-empty {
+      color: #333; /* Dark Grey */
+    }
+  </style>
+</head>
+<body>
+    <header>
+        <h1>Yarder Dashboard</h1>
+      </header>
+      <div class="container">
+        <div class="profile-panel">
+          <img src="<%=user.profile._json.picture%>" alt="Profile Image" class="profile-image">
+          <div class="profile-info">
+            <div class="profile-name"><%=user.profile.displayName%></div>
+            <div class="profile-role">Yard Manager</div>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp
+            <b><a href="/logout" style="text-decoration: none; color: grey; padding-left: 24px;">Logout</a></b>
+          </div>
+        </div>
+        <div class="dashboard-section">
+          <h2>Container Overview</h2>
+          <p>Current status of containers in the yard.</p>
+          Search: <input type="text" id="containerFilter" placeholder="Filter containers">
+          <div class="legends">
+            <div class="guide">
+              <div class="legend legend-loaded-dot"></div>
+              <span class="legend legend-loaded">Loaded Containers</span>
+            </div>
+          </div>
+          
+<table id="containerTable">
+    <thead>
+      <tr>
+        <th data-sort="string">REF_ID ↕️</th>
+        <th data-sort="string">CON_NUM ↕️</th>
+        <th data-sort="number">Container ID ↕️</th>
+        <th data-sort="string">Status ↕️</th>
+        <th data-sort="string">Yard Location ↕️</th>
+        <th data-sort="string">Type ↕️</th>
+      </tr>
+    </thead>
+    <tbody>
+        <!-- Example rows, replace with your data -->
+        <tr>
+          <td>REF123</td>
+          <td>CON456</td>
+          <td>123456</td>
+          <td class="status-loaded"><div class="legend-loaded-dot"></div> Loaded</td>
+          <td>Area A, Row 1, Bay 3</td>
+          <td class="size-20">20ft</td>
+        </tr>
+        <tr>
+          <td>REF789</td>
+          <td>CON012</td>
+          <td>789012</td>
+          <td class="status-empty"><div class="legend-loaded-empty"></div> Empty</td>
+          <td>Area B, Row 2, Bay 1</td>
+          <td class="size-40">40ft</td>
+        </tr>
+        <!-- ... Add more rows ... -->
+        <tr>
+          <td>REF345</td>
+          <td>CON678</td>
+          <td>345678</td>
+          <td class="status-loaded"><div class="legend-loaded-dot"></div> Loaded</td>
+          <td>Area C, Row 3, Bay 5</td>
+          <td class="size-20">20ft</td>
+        </tr>
+        <tr>
+          <td>REF567</td>
+          <td>CON890</td>
+          <td>567890</td>
+          <td class="status-empty"><div class="legend-loaded-empty"></div> Empty</td>
+          <td>Area D, Row 4, Bay 2</td>
+          <td class="size-40">40ft</td>
+        </tr>
+        <!-- ... Add more rows ... -->
+        <!-- Additional rows -->
+        <tr>
+          <td>REF234</td>
+          <td>CON567</td>
+          <td>234567</td>
+          <td class="status-loaded"><div class="legend-loaded-dot"></div> Loaded</td>
+          <td>Area E, Row 2, Bay 4</td>
+          <td class="size-20">20ft</td>
+        </tr>
+        <tr>
+          <td>REF678</td>
+          <td>CON123</td>
+          <td>678123</td>
+          <td class="status-loaded"><div class="legend-loaded-dot"></div> Loaded</td>
+          <td>Area F, Row 5, Bay 3</td>
+          <td class="size-40">40ft</td>
+        </tr>
+        <!-- ... Add more rows ... -->
+      </tbody>
+      
+  </table>
+  
+  <script>
+    const containerFilterInput = document.getElementById('containerFilter');
+  const containerTable = document.getElementById('containerTable');
+  const tableBody = containerTable.querySelector('tbody');
+  const headers = containerTable.querySelectorAll('thead th');
+  let sortingColumn = null;
+
+  containerFilterInput.addEventListener('input', () => {
+    const filterValue = containerFilterInput.value.toLowerCase();
+    const rows = containerTable.getElementsByTagName('tr');
+    
+    for (let i = 1; i < rows.length; i++) { // Start from 1 to skip header row
+      const rowData = rows[i].textContent.toLowerCase();
+      rows[i].style.display = rowData.includes(filterValue) ? '' : 'none';
+    }
+  });
+  
+    headers.forEach(header => {
+      header.addEventListener('click', () => {
+
+        const columnIndex = Array.from(headers).indexOf(header);
+        const dataType = header.getAttribute('data-sort');
+  
+        if (dataType === 'string') {
+          sortTable(columnIndex, 'string');
+        } else if (dataType === 'number') {
+          sortTable(columnIndex, 'number');
+        }
+      });
+    });
+  
+    function sortTable(columnIndex, dataType) {
+      const rows = Array.from(tableBody.querySelectorAll('tr'));
+  
+      rows.sort((a, b) => {
+        const aValue = a.children[columnIndex].textContent;
+        const bValue = b.children[columnIndex].textContent;
+  
+        if (dataType === 'number') {
+          return Number(aValue) - Number(bValue);
+        } else {
+          return aValue.localeCompare(bValue);
+        }
+      });
+  
+      if (sortingColumn === columnIndex) {
+        rows.reverse();
+      }
+  
+      sortingColumn = columnIndex;
+  
+      tableBody.innerHTML = '';
+      rows.forEach(row => tableBody.appendChild(row));
+    }
+  </script>
+      </div>
+</body>
+</html>
